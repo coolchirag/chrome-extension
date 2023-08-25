@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Fetch Interceptor",
+  "version": "1.0",
+  "description": "Intercepts fetch calls",
+  "permissions": [ "webRequest",  "downloads", "tabs", "storage"],
+   "host_permissions": [
+    "https://*/*"
+  ],
+  "content_scripts": [{
+      "js": [ "./content.js" ],
+    "matches": ["http://*/*", "https://*/*"],
+      "all_frames": false,
+      "run_at": "document_start"
+   }],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}
