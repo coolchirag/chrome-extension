@@ -18,9 +18,12 @@ function f1() {
         }
 
         function handleClick(element) {
-            console.log("t4 : "+element.style.cursor+", : "+element.nodeName);
-            if(element.style.cursor == 'pointer' || element.nodeName == 'BUTTON') {
+        if(element != null) {
+        console.log("t4 : "+element.nodeName);
+//            console.log("t5 : "+element.style.cursor);
+            if( element.nodeName == 'BUTTON' || element.nodeName == 'A' || (element.style != null && element.style.cursor == 'pointer')) {
                     element.click();
+                }
                 }
         }
 
