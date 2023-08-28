@@ -1,11 +1,17 @@
 // content.js
+debugger;
+let els = document.getElementsByTagName("div");
+for(el of els) {
+  el.style['backgroup-color']='#FF00FF';
+}
 function f1() {
-            console.log("t0 ");
-            scanElement(document.querySelectorAll("body > *"));
+            console.log("content t0 ");
+            //scanElement(document.querySelectorAll("body > *"));
         }
 
+
         function scanElement(elements) {
-            console.log("t1 ");
+            console.log("content t1 ");
             if(elements != null) {
                 debugger;
                 console.log("t2  : "+elements);
@@ -19,7 +25,7 @@ function f1() {
 
         function handleClick(element) {
         if(element != null) {
-        console.log("t4 : "+element.nodeName);
+        console.log("content t4 : "+element.nodeName);
 //            console.log("t5 : "+element.style.cursor);
             if( element.nodeName == 'BUTTON' || element.nodeName == 'A' || (element.style != null && element.style.cursor == 'pointer')) {
                     element.click();

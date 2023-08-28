@@ -5,17 +5,22 @@
   "description": "Intercepts fetch calls",
    "permissions": ["activeTab"],
    "host_permissions": [
-    "https://*/*"
+    "https://*/*","file://*/*"
   ],
   "content_scripts": [{
       "js": [ "./content.js" ],
-    "matches": ["http://*/*", "https://*/*"],
-      "all_frames": false,
-      "run_at": "document_start"
+    "matches": ["http://*/*", "https://*/*","file://*/*"],
+      "all_frames": false
    }],
+  "background": {
+    "service_worker": "background.js"
+  },
   "icons": {
     "16": "icon.png",
     "48": "icon.png",
     "128": "icon.png"
-  }
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }  
 }

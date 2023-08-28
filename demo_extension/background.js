@@ -1,5 +1,5 @@
 // background.js
-chrome.webRequest.onBeforeRequest.addListener(
+/*chrome.webRequest.onBeforeRequest.addListener(
   function(details) {
   	 console.log("------Inside BL-------------------");
     if (details.type === "xmlhttprequest" && details.method === "GET") {
@@ -10,5 +10,7 @@ chrome.webRequest.onBeforeRequest.addListener(
   },
   { urls: ["<all_urls>"] },
   ["blocking"]
-);
+);*/
+debugger;
+console.log("background stated");
 
