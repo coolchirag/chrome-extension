@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Automation Testing",
+  "version": "2.0.9",
+  "description": "Automation Testing",
+   "permissions": ["activeTab"],
+   "host_permissions": [
+    "https://*/*","file://*/*"
+  ],
+  "content_scripts": [{
+      "js": [ "./content.js" ],
+    "matches": ["http://*/*", "https://*/*","file://*/*"],
+      "all_frames": false
+   }],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }  
+}
