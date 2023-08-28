@@ -4,6 +4,13 @@ let els = document.getElementsByTagName("div");
 for(el of els) {
   el.style['backgroup-color']='#FF00FF';
 }
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  debugger;
+  console.log('Message 2 received in content script:', request.message);
+  
+});
+
 function f1() {
             console.log("content t0 ");
             //scanElement(document.querySelectorAll("body > *"));
