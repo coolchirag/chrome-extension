@@ -1,5 +1,6 @@
 // content.js
 debugger;
+var isStarted = false;
 let els = document.getElementsByTagName("div");
 for(el of els) {
   el.style['backgroup-color']='#FF00FF';
@@ -7,7 +8,19 @@ for(el of els) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   debugger;
-  console.log('Message 2 received in content script:', request.message);
+  let msg = request.message;
+  isStarted = !isStarted;
+  console.log('Message received in content script:', msg + " : "+isStarted);
+  if(isStarted) {
+    scanElement(document.querySelectorAll("body > *"));
+  }
+  
+  /*if(msg == 'Start') {
+    isStarted = true;
+    scanElement(document.querySelectorAll("body > *"));
+  } else {
+    isStarted = false;
+  }*/
   
 });
 
@@ -18,24 +31,30 @@ function f1() {
 
 
         function scanElement(elements) {
+          if(isStarted) {
             console.log("content t1 ");
             if(elements != null) {
-                debugger;
-                console.log("t2  : "+elements);
+                //debugger;
+                console.log("t2  : ");
                 elements.forEach(element => {
-                    console.log("t3 ");
+                    console.log("t3 : "+element.nodeName+" : "+element.className);
                     handleClick(element);
                     scanElement(element.childNodes);
                 });
             }
+          }
         }
 
         function handleClick(element) {
         if(element != null) {
-        console.log("content t4 : "+element.nodeName);
+        
 //            console.log("t5 : "+element.style.cursor);
             if( element.nodeName == 'BUTTON' || element.nodeName == 'A' || (element.style != null && element.style.cursor == 'pointer')) {
-                    element.click();
+              if(element.nodeName != 'A') {
+                debugger;
+              console.log("content t4 : "+element.nodeName+" : "+element.className);      
+              element.click();
+              }
                 }
                 }
         }

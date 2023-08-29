@@ -1,18 +1,25 @@
 debugger;
 const currentDate = new Date();
 console.log("popup loaded : "+currentDate.getTime());
+var captureButton;
 document.addEventListener('DOMContentLoaded', function() {
-	var captureButton = document.getElementById('pb1');
+	captureButton = document.getElementById('pb1');
 	captureButton.addEventListener('click', popupButtonClicked);
   });
 function popupButtonClicked() {
-	console.log("pop up clicked 2");
-	sendMessageToContentScript();
+	let txt = captureButton.textContent;
+	if(txt == 'Start') {
+		captureButton.textContent="Stop";
+	} else {
+		captureButton.textContent="Start";
+	}
+	console.log("pop up clicked  : ", txt);
+	sendMessageToContentScript(txt);
 }
 
-  function sendMessageToContentScript() {
+  function sendMessageToContentScript(msg) {
 	chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 	  var tabId = tabs[0].id;
-	  chrome.tabs.sendMessage(tabId, { message: 'Hello from Popup!' });
+	  chrome.tabs.sendMessage(tabId, { message: msg});
 	});
   }
