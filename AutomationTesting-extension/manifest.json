@@ -10,7 +10,8 @@
   "content_scripts": [{
       "js": [ "./content.js" ],
     "matches": ["http://*/*", "https://*/*","file://*/*"],
-      "all_frames": false
+      "all_frames": false,
+      "run_at":"document_end"
    }],
   "background": {
     "service_worker": "background.js"
