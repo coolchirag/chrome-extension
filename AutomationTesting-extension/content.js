@@ -5,6 +5,8 @@ let els = document.getElementsByTagName("div");
 const ignoredClass = ["mat-focus-indicator mat-menu-trigger user-profile circleBrdrRadius mat-button mat-button-base"];
 var initUrl = '';
 var layer = 0;
+var isNewPageLoaded = false;
+var currentUrl = '';
 console.log(" content init");
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -14,6 +16,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("Message received in content script:", msg + " : " + isStarted);
   if (isStarted) {
     initUrl = window.location.href;
+    currentUrl = window.location.href;
     scanElement(document.querySelectorAll("body > *"));
   }
  
@@ -39,21 +42,23 @@ function scanElement(elements) {
         handleClick(element);
         layer = layer + 1;
         scanElement(element.childNodes);
+        layer = layer-1;
       });
     }
     if(layer == 0) {
       if(initUrl == window.location.href) {
         console.log("Completed.");
-      } else {
+      } else if(isNewPageLoaded) {
         console.log(initUrl+" : "+window.location.href+" : "+(initUrl == window.location.href));
         console.log("back");
         //debugger;
         //window.history.back();
         //debugger;
         //sleepSync(4000);
+        isNewPageLoaded = false;
       }
     }
-    layer = layer-1;
+    
   }
   
 }
@@ -111,11 +116,25 @@ document.addEventListener("DOMContentLoaded", f1);
 // });
 
 const observer = new MutationObserver(function(mutationsList) {
+  if(isStarted) {
+    var isNewNodeFound = false;
   for (const mutation of mutationsList) {
     console.log('----DOM mutation occurred:', mutation);
+    isNewNodeFound = isNewNodeFound || (mutation.addedNodes.length > 0);
+    if(mutation.addedNodes.length > 0) {
     layer = 0;
     scanElement(mutation.addedNodes);
+    
   }
+  }
+  if(isNewNodeFound) {
+    if(currentUrl != window.location.href) {
+      
+      isNewPageLoaded = true;
+      currentUrl = window.location.href;
+    }
+  }
+}
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
